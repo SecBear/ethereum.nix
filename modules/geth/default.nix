@@ -105,12 +105,17 @@ in {
                 if !cfg.ipc.enable
                 then "--ipcdisable"
                 else "";
+
+              ipcPath = 
+                if cfg.ipc.enable && cfg.ipc.path != ""
+                then "--ipcpath ${cfg.ipc.path}"
+                else "";
             in ''
               ${datadir} \
-              ${ipcDisable} ${network} ${jwtSecret} \
+              ${ipcDisable} ${ipcPath} ${network} ${jwtSecret} \
               ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
-            '';
+            ''
           in
             nameValuePair serviceName (mkIf cfg.enable {
               after = ["network.target"];
