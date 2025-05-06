@@ -31,9 +31,18 @@
       };
 
       ipc = mkOption {
-        type = types.bool;
-        default = false;
-        description = "Enable IPC";
+        type = types.submodule {
+          options = {
+            enable = mkEnableOption "IPC";
+            path = mkOption {
+              type = types.str;
+              default = "";
+              description = "Custom path for the IPC socket.";
+            };
+          };
+        };
+        default = {};
+        description = "IPC configuration for Go Ethereum.";
       };
 
       # mixin backup options
