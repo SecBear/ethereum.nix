@@ -100,9 +100,14 @@ in {
                 if cfg.args.datadir != null
                 then "--datadir ${cfg.args.datadir}"
                 else "--datadir %S/${serviceName}";
+
+              ipcDisable =
+                if !cfg.ipc.enable
+                then "--ipcdisable"
+                else "";
             in ''
               ${datadir} \
-              --ipcdisable ${network} ${jwtSecret} \
+              ${ipcDisable} ${network} ${jwtSecret} \
               ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
             '';
