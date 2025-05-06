@@ -30,7 +30,11 @@
         description = "Open ports in the firewall for any enabled networking services";
       };
 
-      ipc = mkEnableOption "Enable IPC";
+      ipc = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Enable IPC";
+      };
 
       # mixin backup options
       backup = let
